@@ -1,0 +1,56 @@
+<!doctype html>
+<html ng-app='formstack'>
+  <head>
+    <title>Formstack Angular 1 Test</title>
+  </head>
+  <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <style>
+      .my-input {
+        transition:all linear 0.5s;
+        background: transparent;
+      }
+      .my-input.ng-invalid {
+        color:white;
+        background: red;
+      }
+    </style>
+    <p id="inputDescription">
+     Input integer to see when valid/invalid.
+     Integer is a valid value. (0.00 - 1.00)
+    </p>
+    <div ng-controller="ExampleController">
+      <form name="testForm">
+        <input ng-model="val" name="anim" class="my-input"
+               aria-describedby="inputDescription" />
+      </form>
+      <bgm my-val='val'></bgm>
+    </div>
+    <!-- <script src='js/formstack.js'></script> -->
+  </body>
+  <script>
+   angular.module('formstack', [])
+     .controller('ExampleController', ['$scope', function($scope) {
+       $scope.val = '1';
+     }])
+     .directive('bgm', function() {
+      return {
+        restrict: 'E',
+        template: `
+          <p>Input {{val * 100}} %</p>
+          <p ng-if="validNumber()" class="error">Number invalid</p>
+        `,
+        scope: {
+          val: '=myVal'
+        },
+        controller: testController
+      }
+      function testController($scope) {
+        $scope.inValidNumber = function() {
+          return ($scope.val > 1.00)
+        }
+      }
+     })
+
+  </script>
+</html>
