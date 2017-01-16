@@ -5,16 +5,6 @@
   </head>
   <body>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-    <style>
-      .my-input {
-        transition:all linear 0.5s;
-        background: transparent;
-      }
-      .my-input.ng-invalid {
-        color:white;
-        background: red;
-      }
-    </style>
     <p id="inputDescription">
      Input integer to see when valid/invalid.
      Integer is a valid value. (0.00 - 1.00)
@@ -38,7 +28,7 @@
         restrict: 'E',
         template: `
           <p>Input {{val * 100}} %</p>
-          <p ng-if="validNumber()" class="error">Number invalid</p>
+          <p ng-if="inValidNumber()" class="error">Number invalid</p>
         `,
         scope: {
           val: '=myVal'
@@ -47,10 +37,9 @@
       }
       function testController($scope) {
         $scope.inValidNumber = function() {
-          return ($scope.val > 1.00)
+          return (($scope.val > 1.00) || ($scope.val < 0))
         }
       }
      })
-
   </script>
 </html>
